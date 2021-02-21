@@ -12,23 +12,17 @@ for (var i = 0; i < hours.length; i++) {
    $('div.time-block').eq(i).append($('<div>').addClass('row'))
    $('div.row').eq(i).append($('<span>').addClass('hour').text(hours[i])).append($('<textarea>').addClass('description')).append($('<button>').addClass('saveBtn'))
 };
-// let rowNumber = mainArea.children().length;
-// for (var i = 0; i < rowNumber; i++){
-//     $('div.time-block:eq(i)').append($('<div>').addClass('row'))
-// }
-
 
 //color code time rows
+let rowCount = mainArea.children().length;
+for (var x = 0; x < rowCount; x++) {
+    let currentRow = $(`#hour-${x} > div > span`);
+    if (currentRow.text() > moment().format('hA')) {
+       currentRow.next($('textarea')).addClass("past");
+    } else if (currentRow < moment().format('hA')){
+        currentRow.next($('textarea')).addClass("future");
+    } else {
+        currentRow.next($('textarea')).addClass("present")
+    }
+}
 
-// for (var x = 0; x < rowNumber; x++) {
-//     currentRow = $(`#hour-${x}`);
-//     if (currentRow.text() > moment().format('hA')) {
-//        currentRow.addClass(".past");
-//     } else if (currentRow < moment().format('hA')){
-//         currentRow.addClass(".future");
-//     } else {
-//         currentRow.addClass(".present")
-//     }
-// }
-
-// 
