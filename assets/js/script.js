@@ -29,6 +29,6 @@ for (var x = 0; x < rowCount; x++) {
 //event listener to save input
 $('.saveBtn').on('click', function (event){
     event.preventDefault();
-    let textInput = $(this).siblings().text();
+    let textInput = $(this).siblings('textarea').val();
     window.localStorage.setItem('savedItem', textInput)
 })
