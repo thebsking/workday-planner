@@ -2,6 +2,7 @@
 let todaysDate = $('#currentDay');
 let mainArea = $('#main-content');
 let hours = ['9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM'];
+let savedInfoArray =[];
 
 //display current date
 todaysDate.text(moment().format('dddd, MMMM Do'));
@@ -26,9 +27,12 @@ for (var x = 0; x < rowCount; x++) {
     }
 };
 
+
 //event listener to save input
 $('.saveBtn').on('click', function (event){
     event.preventDefault();
     let textInput = $(this).siblings('textarea').val();
-    window.localStorage.setItem('savedItem', textInput)
+    let rowInputId = $(this).parent().parent().attr('id')
+    savedInfoArray.push({rowInputId, textInput})
+    window.localStorage.setItem('savedItems', JSON.stringify(savedInfoArray))
 })
