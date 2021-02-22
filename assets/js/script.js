@@ -2,6 +2,7 @@
 let todaysDate = $('#currentDay');
 let mainArea = $('#main-content');
 let hours = ['9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM'];
+let browserStorage = window.localStorage;
 let savedInfoArray =[];
 
 //display current date
@@ -34,5 +35,15 @@ $('.saveBtn').on('click', function (event){
     let textInput = $(this).siblings('textarea').val();
     let rowInputId = $(this).parent().parent().attr('id')
     savedInfoArray.push({rowInputId, textInput})
-    window.localStorage.setItem('savedItems', JSON.stringify(savedInfoArray))
+    browserStorage.setItem('savedItems', JSON.stringify(savedInfoArray))
 })
+
+//write local storage items to correct row
+if (browserStorage.length > 0) {
+    let displayInfoArray = JSON.parse(browserStorage.getItem('savedItems'));
+    for (var i = 0; i < displayInfoArray.length; i++) {
+        let targetRow = displayInfoArray[i].rowInputId;
+        console.log(targetRow);
+        $(`#${targetRow}`).children().children('textarea').val(displayInfoArray[i].textInput)
+    }
+}
