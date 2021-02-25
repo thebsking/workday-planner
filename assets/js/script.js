@@ -1,9 +1,8 @@
 //declare variables
 let todaysDate = $('#currentDay');
 let mainArea = $('#main-content');
-let hours = ['9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM'];
+let hours = ['09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'];
 let browserStorage = window.localStorage;
-let savedInfoArray =[];
 
 //display current date
 todaysDate.text(moment().format('dddd, MMMM Do'));
@@ -19,28 +18,33 @@ for (var i = 0; i < hours.length; i++) {
 let rowCount = mainArea.children().length;
 for (var x = 0; x < rowCount; x++) {
     let currentRow = $(`#hour-${x} > div > span`);
-    if (currentRow.text() < moment().format('hA')) {
+    if (moment(currentRow.text())._i < moment().format('HHmm')) {
        currentRow.next($('textarea')).addClass("past");
-    } else if (currentRow .text() > moment().format('hA')){
+    } else if (moment(currentRow.text())._i > moment().format('HHmm')){
         currentRow.next($('textarea')).addClass("future");
     } else {
         currentRow.next($('textarea')).addClass("present");
     }
 };
 
+let savedInfoArray =[];
+if(browserStorage.length > 0){
+     savedInfoArray = JSON.parse(browserStorage.getItem('savedItems'))
+} 
 
 //event listener to save input
 $('.saveBtn').on('click', function (event){
     event.preventDefault();
     let textInput = $(this).siblings('textarea').val();
-    let rowInputId = $(this).parent().parent().attr('id')
-    savedInfoArray.push({rowInputId, textInput})
+    let rowInputId = $(this).parent().parent().attr('id');
+    savedInfoArray.push({rowInputId, textInput});
     browserStorage.setItem('savedItems', JSON.stringify(savedInfoArray))
 })
 
+let displayInfoArray =[];
 //write local storage items to correct row
 if (browserStorage.length > 0) {
-    let displayInfoArray = JSON.parse(browserStorage.getItem('savedItems'));
+    displayInfoArray = JSON.parse(browserStorage.getItem('savedItems'));
     for (var i = 0; i < displayInfoArray.length; i++) {
         let targetRow = displayInfoArray[i].rowInputId;
         console.log(targetRow);
