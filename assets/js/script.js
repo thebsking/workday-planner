@@ -27,6 +27,7 @@ for (var x = 0; x < rowCount; x++) {
     }
 };
 
+//display items already in local storage
 let savedInfoArray =[];
 if(browserStorage.length > 0){
      savedInfoArray = JSON.parse(browserStorage.getItem('savedItems'))
@@ -39,10 +40,11 @@ $('.saveBtn').on('click', function (event){
     let rowInputId = $(this).parent().parent().attr('id');
     savedInfoArray.push({rowInputId, textInput});
     browserStorage.setItem('savedItems', JSON.stringify(savedInfoArray))
-})
+});
 
-let displayInfoArray =[];
+
 //write local storage items to correct row
+let displayInfoArray =[];
 if (browserStorage.length > 0) {
     displayInfoArray = JSON.parse(browserStorage.getItem('savedItems'));
     for (var i = 0; i < displayInfoArray.length; i++) {
@@ -50,4 +52,4 @@ if (browserStorage.length > 0) {
         console.log(targetRow);
         $(`#${targetRow}`).children().children('textarea').val(displayInfoArray[i].textInput)
     }
-}
+};
