@@ -6,7 +6,7 @@ let browserStorage = window.localStorage;
 
 //display current date
 todaysDate.text(moment().format('dddd, MMMM Do'));
-let currentTime = moment().format('hh:mm A')
+
 //display time blocks
 for (var i = 0; i < hours.length; i++) {
    mainArea.append($('<div>').addClass('time-block').attr('id', 'hour-'+i));
@@ -16,11 +16,15 @@ for (var i = 0; i < hours.length; i++) {
 
 //color code time rows
 let rowCount = mainArea.children().length;
+let currentHour = moment().format('hh:mm A')
+let currentTime = Date.parse(`01-01-20 ${currentHour}`)
 for (var x = 0; x < rowCount; x++) {
     let currentRow = $(`#hour-${x} > div > span`);
-    if (currentRow.text() > moment().format('hh:mm A')) {
+    let rowTime = currentRow.text();
+    let checkTime = Date.parse(`01-01-20 ${rowTime}`);
+    if ( checkTime < currentTime) {
        currentRow.next($('textarea')).addClass("past");
-    } else if (currentRow.text() < moment().format('hh:mm A')){
+    } else if (checkTime > currentTime) {
         currentRow.next($('textarea')).addClass("future");
     } else {
         currentRow.next($('textarea')).addClass("present");
