@@ -6,7 +6,7 @@ let browserStorage = window.localStorage;
 
 //display current date
 todaysDate.text(moment().format('dddd, MMMM Do'));
-
+let currentTime = moment().format('hh:mm A')
 //display time blocks
 for (var i = 0; i < hours.length; i++) {
    mainArea.append($('<div>').addClass('time-block').attr('id', 'hour-'+i));
@@ -18,14 +18,15 @@ for (var i = 0; i < hours.length; i++) {
 let rowCount = mainArea.children().length;
 for (var x = 0; x < rowCount; x++) {
     let currentRow = $(`#hour-${x} > div > span`);
-    if (moment(currentRow.text())._i < moment().format('HHmm')) {
+    if (currentRow.text() > moment().format('hh:mm A')) {
        currentRow.next($('textarea')).addClass("past");
-    } else if (moment(currentRow.text())._i > moment().format('HHmm')){
+    } else if (currentRow.text() < moment().format('hh:mm A')){
         currentRow.next($('textarea')).addClass("future");
     } else {
         currentRow.next($('textarea')).addClass("present");
     }
 };
+
 
 //display items already in local storage
 let savedInfoArray =[];
@@ -49,7 +50,6 @@ if (browserStorage.length > 0) {
     displayInfoArray = JSON.parse(browserStorage.getItem('savedItems'));
     for (var i = 0; i < displayInfoArray.length; i++) {
         let targetRow = displayInfoArray[i].rowInputId;
-        console.log(targetRow);
         $(`#${targetRow}`).children().children('textarea').val(displayInfoArray[i].textInput)
     }
 };
