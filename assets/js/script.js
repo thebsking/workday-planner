@@ -63,6 +63,7 @@ if (browserStorage.length > 0) {
 };
 
 //replace save icon with x
+/*
 let textAreaCount = $('textarea').length
 for(var j=0; j < textAreaCount; j++) {
 if ($('textarea').eq(j).val() !== '') {
@@ -76,5 +77,5 @@ if ($('.saveBtn').text() === 'X') {
         let rowInputId = $(this).parent().parent().attr('id');
         savedInfoArray.pop({rowInputId, textInput});
     })
-}
+}*/
 
