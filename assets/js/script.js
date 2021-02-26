@@ -25,7 +25,7 @@ for (var x = 0; x < rowCount; x++) {
     checkTime = Date.parse(`01-01-20 ${rowTime}`);
     nextRow = $(`#hour-${x+1} > div > span`).text();
     nextHourCheck =Date.parse(`01-01-20 ${nextRow}`); 
-    if (currentTime > checkTime && currentTime < nextHourCheck){
+    if (currentTime > checkTime && currentTime < nextHourCheck || checkTime === currentTime){
         currentRow.next($('textarea')).addClass("present");
     } else if ( checkTime < currentTime) {
        currentRow.next($('textarea')).addClass("past");
@@ -61,3 +61,20 @@ if (browserStorage.length > 0) {
         $(`#${targetRow}`).children().children('textarea').val(displayInfoArray[i].textInput)
     }
 };
+
+//replace save icon with x
+let textAreaCount = $('textarea').length
+for(var j=0; j < textAreaCount; j++) {
+if ($('textarea').eq(j).val() !== '') {
+    $('textarea').eq(j).next('button').html('<i>X</i>')
+}
+};
+
+if ($('.saveBtn').text() === 'X') {
+    $('.saveBtn').on('click', function(event){
+        let textInput = $(this).siblings('textarea').val();
+        let rowInputId = $(this).parent().parent().attr('id');
+        savedInfoArray.pop({rowInputId, textInput});
+    })
+}
+
