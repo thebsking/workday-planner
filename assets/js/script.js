@@ -1,13 +1,13 @@
-//declare variables
+//declare global variables
 let todaysDate = $('#currentDay');
 let mainArea = $('#main-content');
 let hours = ['09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'];
 let browserStorage = window.localStorage;
 
-//display current date
+//display current date in jumbotron
 todaysDate.text(moment().format('dddd, MMMM Do'));
 
-//display time blocks
+//display time blocks within main content div
 for (var i = 0; i < hours.length; i++) {
    mainArea.append($('<div>').addClass('time-block').attr('id', 'hour-'+i));
    $('div.time-block').eq(i).append($('<div>').addClass('row'))
@@ -52,7 +52,7 @@ $('.saveBtn').on('click', function (event){
 });
 
 
-//write local storage items to correct row
+//write local storage items to correct row on reload
 let displayInfoArray =[];
 if (browserStorage.length > 0) {
     displayInfoArray = JSON.parse(browserStorage.getItem('savedItems'));
