@@ -11,7 +11,7 @@ todaysDate.text(moment().format('dddd, MMMM Do'));
 for (var i = 0; i < hours.length; i++) {
    mainArea.append($('<div>').addClass('time-block').attr('id', 'hour-'+i));
    $('div.time-block').eq(i).append($('<div>').addClass('row'))
-   $('div.row').eq(i).append($('<span>').addClass('hour').text(hours[i]).css('padding-top', '15px')).append($('<textarea>').addClass('description')).append($('<button>').addClass('saveBtn').text('save'))
+   $('div.row').eq(i).append($('<span>').addClass('hour').text(hours[i]).css('padding-top', '15px')).append($('<textarea>').addClass('description')).append($('<button>').addClass('saveBtn').html('<i class="bi bi-file-earmark-plus-fill"></i>'))
 };
 
 //color code time rows
