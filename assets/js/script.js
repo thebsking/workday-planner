@@ -11,24 +11,28 @@ todaysDate.text(moment().format('dddd, MMMM Do'));
 for (var i = 0; i < hours.length; i++) {
    mainArea.append($('<div>').addClass('time-block').attr('id', 'hour-'+i));
    $('div.time-block').eq(i).append($('<div>').addClass('row'))
-   $('div.row').eq(i).append($('<span>').addClass('hour').text(hours[i]).css('padding-top', '5px')).append($('<textarea>').addClass('description')).append($('<button>').addClass('saveBtn').text('save'))
+   $('div.row').eq(i).append($('<span>').addClass('hour').text(hours[i]).css('padding-top', '15px')).append($('<textarea>').addClass('description')).append($('<button>').addClass('saveBtn').text('save'))
 };
 
 //color code time rows
 let rowCount = mainArea.children().length;
-let currentHour = moment().format('hh:mm A')
-let currentTime = Date.parse(`01-01-20 ${currentHour}`)
+let currentHour = moment().format('hh:mm A');
+let currentTime = Date.parse(`01-01-20 ${currentHour}`);
+
 for (var x = 0; x < rowCount; x++) {
-    let currentRow = $(`#hour-${x} > div > span`);
-    let rowTime = currentRow.text();
-    let checkTime = Date.parse(`01-01-20 ${rowTime}`);
-    if ( checkTime < currentTime) {
-       currentRow.next($('textarea')).addClass("past");
-    } else if (checkTime > currentTime) {
-        currentRow.next($('textarea')).addClass("future");
-    } else {
+    currentRow = $(`#hour-${x} > div > span`);
+    rowTime = currentRow.text();
+    checkTime = Date.parse(`01-01-20 ${rowTime}`);
+    nextRow = $(`#hour-${x+1} > div > span`).text();
+    nextHourCheck =Date.parse(`01-01-20 ${nextRow}`); 
+    if (currentTime > checkTime && currentTime < nextHourCheck){
         currentRow.next($('textarea')).addClass("present");
+    } else if ( checkTime < currentTime) {
+       currentRow.next($('textarea')).addClass("past");
     }
+    else if (checkTime > currentTime) {
+        currentRow.next($('textarea')).addClass("future");
+    } 
 };
 
 
